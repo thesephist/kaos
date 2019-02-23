@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 	"time"
@@ -20,11 +21,12 @@ func Prompt(str string) string {
 
 // Additive actions
 
-func runList(tasks *kaos.TaskList) {
+func runList(tasks kaos.TaskList) kaos.TaskList {
 	fmt.Println(tasks)
+	return tasks
 }
 
-func runCreate(tasks *kaos.TaskList) {
+func runCreate(tasks kaos.TaskList) kaos.TaskList {
 	fmt.Println("Create")
 
 	project := Prompt("Project?")
@@ -49,50 +51,70 @@ func runCreate(tasks *kaos.TaskList) {
 	fmt.Println()
 	fmt.Println("Created:")
 	fmt.Println(t)
+	return tasks
 }
 
-func runStart(tasks *kaos.TaskList, ref string) {
-	fmt.Println("Start", ref)
+func runStart(tasks kaos.TaskList, ref string) kaos.TaskList {
+	idx, t, err := tasks.FindMatch(ref)
+	if err != nil {
+		log.Fatal(err)
+		os.Exit(1)
+	}
+	t.Start()
+	tasks.SetTask(idx, t)
+
+	fmt.Printf("Started #%s: %s\n", t.Ref, t.Description)
+
+	return tasks
 }
 
-func runFinish(tasks *kaos.TaskList, ref string) {
+func runFinish(tasks kaos.TaskList, ref string) kaos.TaskList {
 	fmt.Println("Finish", ref)
+	return tasks
 }
 
 // Destructive actions
 
-func runRemove(tasks *kaos.TaskList, ref string) {
+func runRemove(tasks kaos.TaskList, ref string) kaos.TaskList {
 	fmt.Println("Remove", ref)
+	return tasks
 }
 
-func runUnstart(task *kaos.TaskList, ref string) {
+func runUnstart(tasks kaos.TaskList, ref string) kaos.TaskList {
 	fmt.Println("Unstart", ref)
+	return tasks
 }
 
-func runUnfinish(task *kaos.TaskList, ref string) {
+func runUnfinish(tasks kaos.TaskList, ref string) kaos.TaskList {
 	fmt.Println("Unfinish", ref)
+	return tasks
 }
 
 // Update actions
 
-func runSetDue(task *kaos.TaskList, ref string) {
+func runSetDue(tasks kaos.TaskList, ref string) kaos.TaskList {
 	fmt.Println("Set due", ref)
+	return tasks
 }
 
-func runSetProject(task *kaos.TaskList, ref string) {
+func runSetProject(tasks kaos.TaskList, ref string) kaos.TaskList {
 	fmt.Println("Set project", ref)
+	return tasks
 }
 
-func runSetSize(task *kaos.TaskList, ref string) {
+func runSetSize(tasks kaos.TaskList, ref string) kaos.TaskList {
 	fmt.Println("Set size", ref)
+	return tasks
 }
 
-func runSetDescription(task *kaos.TaskList, ref string) {
+func runSetDescription(tasks kaos.TaskList, ref string) kaos.TaskList {
 	fmt.Println("Set description", ref)
+	return tasks
 }
 
-func runAddComment(task *kaos.TaskList, ref string) {
+func runAddComment(tasks kaos.TaskList, ref string) kaos.TaskList {
 	fmt.Println("Add comment", ref)
+	return tasks
 }
 
 func main() {
@@ -116,31 +138,31 @@ func main() {
 
 	switch action {
 	case "list":
-		runList(&tasks)
+		tasks = runList(tasks)
 	case "create":
-		runCreate(&tasks)
+		tasks = runCreate(tasks)
 	case "start":
-		runStart(&tasks, parameters[0])
+		tasks = runStart(tasks, parameters[0])
 	case "finish":
-		runFinish(&tasks, parameters[0])
+		tasks = runFinish(tasks, parameters[0])
 
 	case "remove":
-		runRemove(&tasks, parameters[0])
+		tasks = runRemove(tasks, parameters[0])
 	case "Unstart":
-		runUnstart(&tasks, parameters[0])
+		tasks = runUnstart(tasks, parameters[0])
 	case "Unfinish":
-		runUnfinish(&tasks, parameters[0])
+		tasks = runUnfinish(tasks, parameters[0])
 
 	case "set-due":
-		runSetDue(&tasks, parameters[0])
+		tasks = runSetDue(tasks, parameters[0])
 	case "set-project":
-		runSetProject(&tasks, parameters[0])
+		tasks = runSetProject(tasks, parameters[0])
 	case "set-size":
-		runSetSize(&tasks, parameters[0])
+		tasks = runSetSize(tasks, parameters[0])
 	case "set-description":
-		runSetDescription(&tasks, parameters[0])
+		tasks = runSetDescription(tasks, parameters[0])
 	case "add-comment":
-		runAddComment(&tasks, parameters[0])
+		tasks = runAddComment(tasks, parameters[0])
 
 	default:
 		fmt.Printf("Unknown kaos action '%s'\n", action)

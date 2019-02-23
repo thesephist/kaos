@@ -76,7 +76,7 @@ func formatTime(t time.Time) string {
 	}
 }
 
-func (t Task) Matches(ref string) bool {
+func (t *Task) Matches(ref string) bool {
 	return strings.Contains(t.Ref, ref)
 }
 
@@ -88,26 +88,31 @@ func (tasks TaskList) String() string {
 	return strings.Join(s, "\n")
 }
 
-func (tasks TaskList) FindMatch(ref string) (Task, error) {
-	matches := []Task{}
-	for _, t := range tasks.list {
+func (tasks TaskList) FindMatch(ref string) (matchIdx int, match Task, err error) {
+	count := 0
+	for idx, t := range tasks.list {
 		if t.Matches(ref) {
-			matches = append(matches, t)
+			matchIdx, match = idx, t
+			count++
 		}
 	}
 
-	switch len(matches) {
+	switch count {
 	case 0:
-		err := errors.New("No match found")
-		return Task{}, err
+		err = errors.New("No match found")
+		return
 	case 1:
-		return matches[0], nil
+		return
 	default:
-		err := errors.New("More than one matches found")
-		return matches[0], err
+		err = errors.New("More than one matches found")
+		return
 	}
 }
 
 func (tasks *TaskList) AddTask(t Task) {
 	tasks.list = append(tasks.list, t)
+}
+
+func (tasks *TaskList) SetTask(idx int, t Task) {
+	tasks.list[idx] = t
 }

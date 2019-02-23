@@ -22,6 +22,8 @@ type Task struct {
 	Size        int
 	Description string
 	Comments    []string
+
+	deleted bool
 }
 
 type TaskList struct {
@@ -67,6 +69,10 @@ func (t *Task) Unfinish() {
 	t.Finished = time.Time{}
 }
 
+func (t *Task) Delete() {
+	t.deleted = true
+}
+
 func formatTime(t time.Time) string {
 	zero := time.Time{}
 	if t == zero {
@@ -83,14 +89,15 @@ func (t *Task) Matches(ref string) bool {
 func (tasks TaskList) String() string {
 	var s []string
 	for _, t := range tasks.list {
-		s = append(s, t.String())
+		if !t.deleted {
+			s = append(s, t.String())
+		}
 	}
 	return strings.Join(s, "\n")
 }
 
 func (tasks *TaskList) FindMatch(ref string) (match *Task, err error) {
-	matchIdx := -1
-	count := 0
+	matchIdx, count := -1, 0
 	for idx, t := range tasks.list {
 		if t.Matches(ref) {
 			matchIdx = idx

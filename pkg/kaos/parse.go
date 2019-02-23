@@ -10,11 +10,11 @@ import (
 	"time"
 )
 
-func Write(writer io.Writer, tasks TaskList) (err error) {
+func Write(writer io.Writer, tasks TaskList) (n int, err error) {
 	buf := new(bytes.Buffer)
 	buf.WriteString(tasks.String())
-	_, err = writer.Write(buf.Bytes())
-	return
+	n, err = writer.Write(buf.Bytes())
+	return n, err
 }
 
 func Parse(reader io.Reader) (tasks TaskList, err error) {

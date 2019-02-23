@@ -52,6 +52,24 @@ func (t Task) String() string {
 	return taskStr
 }
 
+func (t Task) Print() string {
+	taskStr := fmt.Sprintf(
+		Bold("#%s")+" "+Grey("[%s|%s|%s|%s]")+"\n"+Blue("%s")+Yellow(" (%d)")+": %s",
+		t.Ref,
+		formatTime(t.Created),
+		formatTime(t.Started),
+		formatTime(t.Finished),
+		formatTime(t.Due),
+		t.Project,
+		t.Size,
+		t.Description,
+	)
+	for _, commentStr := range t.Comments {
+		taskStr += "\n\t" + commentStr
+	}
+	return taskStr
+}
+
 func (t *Task) Start() {
 	t.Started = time.Now()
 }
@@ -91,6 +109,16 @@ func (tasks TaskList) String() string {
 	for _, t := range tasks.list {
 		if !t.deleted {
 			s = append(s, t.String())
+		}
+	}
+	return strings.Join(s, "\n")
+}
+
+func (tasks TaskList) Print() string {
+	var s []string
+	for _, t := range tasks.list {
+		if !t.deleted {
+			s = append(s, t.Print())
 		}
 	}
 	return strings.Join(s, "\n")

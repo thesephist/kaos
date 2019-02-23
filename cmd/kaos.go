@@ -44,7 +44,7 @@ func main() {
 
 	switch action {
 	case "list":
-		fmt.Println(tasks)
+		fmt.Println(tasks.Print())
 	case "create":
 		project := Prompt("Project?")
 		sizeStr := Prompt("Size?")
@@ -66,7 +66,7 @@ func main() {
 		tasks.AddTask(t)
 
 		fmt.Println("Created:")
-		fmt.Println(t)
+		fmt.Println(t.Print())
 	case "start":
 		target.Start()
 		fmt.Printf("Started #%s: %s\n", target.Ref, target.Description)
@@ -89,18 +89,18 @@ func main() {
 		project := Prompt("Project?")
 		target.Project = project
 		fmt.Println("Updated.")
-		fmt.Println(target)
+		fmt.Println(target.Print())
 	case "set-size":
 		sizeStr := Prompt("Size?")
 		size, _ := strconv.Atoi(sizeStr)
 		target.Size = size
 		fmt.Println("Updated.")
-		fmt.Println(target)
+		fmt.Println(target.Print())
 	case "set-description":
 		description := Prompt("Description?")
 		target.Description = description
 		fmt.Println("Updated.")
-		fmt.Println(target)
+		fmt.Println(target.Print())
 	case "add-comment":
 
 	default:

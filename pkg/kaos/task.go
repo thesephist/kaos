@@ -88,14 +88,16 @@ func (tasks TaskList) String() string {
 	return strings.Join(s, "\n")
 }
 
-func (tasks TaskList) FindMatch(ref string) (matchIdx int, match Task, err error) {
+func (tasks *TaskList) FindMatch(ref string) (match *Task, err error) {
+	matchIdx := -1
 	count := 0
 	for idx, t := range tasks.list {
 		if t.Matches(ref) {
-			matchIdx, match = idx, t
+			matchIdx = idx
 			count++
 		}
 	}
+	match = &tasks.list[matchIdx]
 
 	switch count {
 	case 0:
@@ -111,8 +113,4 @@ func (tasks TaskList) FindMatch(ref string) (matchIdx int, match Task, err error
 
 func (tasks *TaskList) AddTask(t Task) {
 	tasks.list = append(tasks.list, t)
-}
-
-func (tasks *TaskList) SetTask(idx int, t Task) {
-	tasks.list[idx] = t
 }

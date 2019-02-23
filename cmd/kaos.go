@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 
 	"../pkg/kaos"
@@ -42,7 +43,9 @@ func runCreate(tasks kaos.TaskList) {
 	}
 	tasks.AddTask(t)
 
-	fmt.Println(tasks)
+	fmt.Println()
+	fmt.Println("Created:")
+	fmt.Println(t)
 }
 
 func runStart(tasks kaos.TaskList, ref string) {
@@ -90,6 +93,11 @@ func runAddComment(task kaos.TaskList, ref string) {
 }
 
 func main() {
+	r := strings.NewReader("#omwasgvyjc [2019/02/23T03:49:15|-|-|-]\ntest (3): test\n\tComment1\n\tComment 2\n#omwasgvyjc [2019/02/23T03:49:15|-|-|-]\ntest (3): test\n\tComment1\n\tComment 2")
+	kaos.Parse(r)
+}
+
+func notmain() {
 	args := os.Args[1:]
 
 	action := args[0]

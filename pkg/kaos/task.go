@@ -134,7 +134,11 @@ func (tasks TaskList) Sorted() TaskList {
 		if iT == zeroTime {
 			return false
 		} else {
-			return iT.Before(jT)
+			if jT == zeroTime {
+				return true
+			} else {
+				return iT.Before(jT)
+			}
 		}
 	})
 	return TaskList{

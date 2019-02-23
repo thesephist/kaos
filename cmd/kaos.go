@@ -21,6 +21,10 @@ func Prompt(str string) string {
 func main() {
 	args := os.Args[1:]
 
+	if len(args) == 0 {
+		args = append(args, "list")
+	}
+
 	action := args[0]
 	parameters := args[1:]
 

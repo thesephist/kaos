@@ -102,6 +102,10 @@ func main() {
 		fmt.Println("Updated.")
 		fmt.Println(target.Print())
 	case "add-comment":
+		newComment := Prompt("New Comment?")
+		target.Comments = append(target.Comments, newComment)
+		fmt.Println("Updated.")
+		fmt.Println(target.Print())
 
 	default:
 		fmt.Printf("Unknown kaos action '%s'\n", action)

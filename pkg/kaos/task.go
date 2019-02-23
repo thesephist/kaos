@@ -36,7 +36,7 @@ func NewRef() string {
 
 func (t Task) String() string {
 	taskStr := fmt.Sprintf(
-		"#%s [%s|%s|%s|%s]\n%s (%d): %s",
+		"#%s [%s|%s|%s|%s]\n%s (%d):\t%s",
 		t.Ref,
 		formatTime(t.Created),
 		formatTime(t.Started),
@@ -54,7 +54,7 @@ func (t Task) String() string {
 
 func (t Task) Print() string {
 	taskStr := fmt.Sprintf(
-		Bold("#%s")+" "+Grey("[%s|%s|%s|%s]")+"\n"+Blue("%s")+Yellow(" (%d)")+": %s",
+		Bold("#%s")+" "+Grey("[%s|%s|%s|%s]")+"\n"+Blue("%s")+Yellow(" (%d)")+":\t%s",
 		t.Ref,
 		formatTime(t.Created),
 		formatTime(t.Started),

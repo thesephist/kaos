@@ -10,18 +10,12 @@ import (
 	"time"
 )
 
-/*
-	"#%s [%s|%s|%s|%s]
-	%s (%d): %s",
-	t.Ref,
-	formatTime(t.Created),
-	formatTime(t.Started),
-	formatTime(t.Finished),
-	formatTime(t.Due),
-	t.Project,
-	t.Size,
-	t.Description,
-*/
+func Write(writer io.Writer, tasks TaskList) (err error) {
+	buf := new(bytes.Buffer)
+	buf.WriteString(tasks.String())
+	_, err = writer.Write(buf.Bytes())
+	return
+}
 
 func Parse(reader io.Reader) (tasks TaskList, err error) {
 	buf := new(bytes.Buffer)
@@ -33,7 +27,6 @@ func Parse(reader io.Reader) (tasks TaskList, err error) {
 	}
 
 	taskParts := strings.Split(str, "\n#")[1:]
-	fmt.Println(taskParts)
 
 	for _, taskPart := range taskParts {
 		var err error
@@ -59,24 +52,28 @@ func Parse(reader io.Reader) (tasks TaskList, err error) {
 			dates = append(dates, result)
 		}
 
-		fmt.Println("ref:", refPart)
-		fmt.Println("Dates:", dates)
-
 		secondLineParts := strings.Split(secondLine, " ")
 		projectPart := secondLineParts[0]
 		sizePartStr := secondLineParts[1][1 : len(secondLineParts[1])-2]
 		sizePart, err := strconv.Atoi(sizePartStr)
 		descriptionPart := strings.Join(secondLineParts[2:], " ")
 
-		fmt.Println("Project:", projectPart)
-		fmt.Println("Size:", sizePart)
-		fmt.Println("Description:", descriptionPart)
-		fmt.Println("Comments:", commentParts)
-
 		if err != nil {
 			fmt.Println("There was an error reading tasks from disk", err)
 			os.Exit(1)
 		}
+
+		tasks.AddTask(Task{
+			Ref:         refPart,
+			Created:     dates[0],
+			Started:     dates[1],
+			Finished:    dates[2],
+			Due:         dates[3],
+			Project:     projectPart,
+			Size:        sizePart,
+			Description: descriptionPart,
+			Comments:    commentParts,
+		})
 	}
 
 	return

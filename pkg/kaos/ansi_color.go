@@ -17,3 +17,7 @@ func Blue(s string) string {
 func Yellow(s string) string {
 	return "\u001b[33;1m" + s + END
 }
+
+func Red(s string) string {
+	return "\u001b[31;1m" + s + END
+}

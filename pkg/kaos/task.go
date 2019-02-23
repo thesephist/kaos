@@ -4,6 +4,7 @@ import (
 	"../wordid"
 	"errors"
 	"fmt"
+	"sort"
 	"strings"
 	"time"
 )
@@ -36,7 +37,7 @@ func NewRef() string {
 
 func (t Task) String() string {
 	taskStr := fmt.Sprintf(
-		"#%s [%s|%s|%s|%s]\n%s (%d):\t%s",
+		"#%s [%s|%s|%s|%s]\n%s (%d): %s",
 		t.Ref,
 		formatTime(t.Created),
 		formatTime(t.Started),
@@ -54,7 +55,7 @@ func (t Task) String() string {
 
 func (t Task) Print() string {
 	taskStr := fmt.Sprintf(
-		Bold("#%s")+" "+Grey("[%s|%s|%s|%s]")+"\n"+Blue("%s")+Yellow(" (%d)")+":\t%s",
+		Bold("#%s")+" "+Grey("[%s|%s|%s]")+Red(" @%s")+"\n"+Blue("%s")+Yellow("\t(%d)")+": %s",
 		t.Ref,
 		formatTime(t.Created),
 		formatTime(t.Started),
@@ -122,6 +123,23 @@ func (tasks TaskList) Print() string {
 		}
 	}
 	return strings.Join(s, "\n")
+}
+
+func (tasks TaskList) Sorted() TaskList {
+	zeroTime := time.Time{}
+	sorted := tasks.list[:]
+	sort.Slice(sorted, func(i, j int) bool {
+		iT := sorted[i].Due
+		jT := sorted[j].Due
+		if iT == zeroTime {
+			return false
+		} else {
+			return iT.Before(jT)
+		}
+	})
+	return TaskList{
+		list: sorted,
+	}
 }
 
 func (tasks *TaskList) FindMatch(ref string) (match *Task, err error) {

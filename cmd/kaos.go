@@ -44,7 +44,7 @@ func main() {
 
 	switch action {
 	case "list":
-		fmt.Println(tasks.Print())
+		fmt.Println(tasks.Sorted().Print())
 	case "create":
 		project := Prompt("Project?")
 		sizeStr := Prompt("Size?")
@@ -84,24 +84,35 @@ func main() {
 		target.Unfinish()
 		fmt.Printf("Unfinished#%s: %s\n", target.Ref, target.Description)
 
-	case "set-due":
-	case "set-project":
+	case "due":
+		dateStr := Prompt("Due Date?")
+		date, err := time.Parse("2006/01/02T15:04:05", dateStr)
+		if err != nil {
+			date, err = time.Parse("2006/01/02", dateStr)
+		}
+		if err != nil {
+			fmt.Println("Your date was invalid")
+		} else {
+			target.Due = date
+			fmt.Println(target.Print())
+		}
+	case "project":
 		project := Prompt("Project?")
 		target.Project = project
 		fmt.Println("Updated.")
 		fmt.Println(target.Print())
-	case "set-size":
+	case "size":
 		sizeStr := Prompt("Size?")
 		size, _ := strconv.Atoi(sizeStr)
 		target.Size = size
 		fmt.Println("Updated.")
 		fmt.Println(target.Print())
-	case "set-description":
+	case "describe":
 		description := Prompt("Description?")
 		target.Description = description
 		fmt.Println("Updated.")
 		fmt.Println(target.Print())
-	case "add-comment":
+	case "comment":
 		newComment := Prompt("New Comment?")
 		target.Comments = append(target.Comments, newComment)
 		fmt.Println("Updated.")

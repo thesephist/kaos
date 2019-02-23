@@ -1,5 +1,5 @@
 # Kaos task files
-*.kaos
+kaosfile
 
 # Binaries for programs and plugins
 *.exe

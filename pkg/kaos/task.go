@@ -24,7 +24,9 @@ type Task struct {
 	Comments    []string
 }
 
-type TaskList []Task
+type TaskList struct {
+	list []Task
+}
 
 func NewRef() string {
 	return wordid.Generate()
@@ -78,9 +80,17 @@ func (t Task) Matches(ref string) bool {
 	return strings.Contains(t.Ref, ref)
 }
 
+func (tasks TaskList) String() string {
+	var s []string
+	for _, t := range tasks.list {
+		s = append(s, t.String())
+	}
+	return strings.Join(s, "\n")
+}
+
 func (tasks TaskList) FindMatch(ref string) (Task, error) {
 	matches := []Task{}
-	for _, t := range tasks {
+	for _, t := range tasks.list {
 		if t.Matches(ref) {
 			matches = append(matches, t)
 		}
@@ -96,4 +106,8 @@ func (tasks TaskList) FindMatch(ref string) (Task, error) {
 		err := errors.New("More than one matches found")
 		return matches[0], err
 	}
+}
+
+func (tasks *TaskList) AddTask(t Task) {
+	tasks.list = append(tasks.list, t)
 }

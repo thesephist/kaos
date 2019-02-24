@@ -9,7 +9,7 @@ func Bold(s string) string {
 }
 
 func Grey(s string) string {
-	return "\u001b[30;1m]" + s + END
+	return "\u001b[30;1m" + s + END
 }
 
 func Underline(s string) string {

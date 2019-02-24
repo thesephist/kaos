@@ -81,10 +81,10 @@ func main() {
 	case "remove":
 		target.Delete()
 		fmt.Printf("Removed #%s: %s\n", target.Ref, target.Description)
-	case "Unstart":
+	case "unstart":
 		target.Unstart()
 		fmt.Printf("Unstarted #%s: %s\n", target.Ref, target.Description)
-	case "Unfinish":
+	case "unfinish":
 		target.Unfinish()
 		fmt.Printf("Unfinished#%s: %s\n", target.Ref, target.Description)
 

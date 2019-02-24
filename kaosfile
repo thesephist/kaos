@@ -4,3 +4,7 @@ sigil (2): Use cobra (https://github.com/spf13/cobra) as the CLI library for act
 sigil (2): Consider removing Ref as a persistent property, and instead having a hash function that hashes a Task struct to the same type of reference code
 #vfjuzurwua [2019/02/23T23:42:41|-|-|-]
 sigil (4): Date/time parsing should support natural language for "today", "tomorrow", and +n for n days from now; -n for n days prior, +-nw for weeks (7 days), and [month date] as in may 25
+#cdvqjaniua [2019/02/24T00:58:38|-|-|-]
+kaos (2): Add ability to specify the location for a kaosfile in an environment variable -- for usage as a general CLI for a non-project-specific project manager, like keeping the kaosfile in ~/Dropbox/
+	Should make a kaosfile path resolution order and set a spec: local command line flag -> local ./kaosfile in cwd -> PATH
+	Explicitly prohibit traversing up cwd directory parents to find a ./kaosfile -- might be useful when working inside a git project specifically? Otherwise not very useful and mostly bloat imo

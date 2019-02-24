@@ -47,9 +47,13 @@ func (tasks TaskList) Sorted() TaskList {
 	return TaskList(sorted)
 }
 
+func iContains(s, sub string) bool {
+	return strings.Contains(strings.ToLower(s), strings.ToLower(sub))
+}
+
 func (tasks *TaskList) Search(sub string) (matches TaskList) {
 	for _, t := range *tasks {
-		if strings.Contains(t.Description, sub) || strings.Contains(t.Project, sub) {
+		if iContains(t.Description, sub) || iContains(t.Project, sub) {
 			matches = append(matches, t)
 		}
 	}

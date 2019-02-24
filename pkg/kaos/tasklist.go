@@ -47,6 +47,15 @@ func (tasks TaskList) Sorted() TaskList {
 	return TaskList(sorted)
 }
 
+func (tasks *TaskList) Search(sub string) (matches TaskList) {
+	for _, t := range *tasks {
+		if strings.Contains(t.Description, sub) || strings.Contains(t.Project, sub) {
+			matches = append(matches, t)
+		}
+	}
+	return matches
+}
+
 func (tasks *TaskList) FindMatch(ref string) (match *Task, err error) {
 	matchIdx, count := -1, 0
 	for idx, t := range *tasks {
@@ -58,13 +67,13 @@ func (tasks *TaskList) FindMatch(ref string) (match *Task, err error) {
 			break
 		}
 	}
-	match = &(*tasks)[matchIdx]
 
 	switch count {
 	case 0:
 		err = errors.New("No match found")
 		return
 	case 1:
+		match = &(*tasks)[matchIdx]
 		return
 	default:
 		err = errors.New("More than one matches found")

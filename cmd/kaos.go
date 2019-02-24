@@ -49,6 +49,8 @@ func main() {
 	switch action {
 	case "list":
 		fmt.Println(tasks.Sorted().Print())
+	case "find":
+		fmt.Println(tasks.Search(parameters[0]).Sorted().Print())
 	case "create":
 		project := Prompt("Project?")
 		sizeStr := Prompt("Size?")

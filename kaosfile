@@ -1,0 +1,6 @@
+#lfqmwnxrrh [2019/02/23T21:25:21|-|-|-]
+sigil (2): Use cobra (https://github.com/spf13/cobra) as the CLI library for actual Sigil CLI, but with pkg/sigil containing all common web/cli/native app logic and the CLI code importing pkg/sigil
+#kcvdprlohm [2019/02/23T21:43:22|-|-|-]
+sigil (2): Consider removing Ref as a persistent property, and instead having a hash function that hashes a Task struct to the same type of reference code
+#vfjuzurwua [2019/02/23T23:42:41|-|-|-]
+sigil (4): Date/time parsing should support natural language for "today", "tomorrow", and +n for n days from now; -n for n days prior, +-nw for weeks (7 days), and [month date] as in may 25

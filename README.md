@@ -53,6 +53,7 @@ Kaos uses an open file format that's human-readable to keep track of tasks. This
 - The data is human-readable. It's just a file, and I can open it and read it and know exactly where I am on a project with a few `grep` and `sed` chained together.
 - The data is not tied to the tool. Although `kaos` the CLI makes managing the file easier, it's not a necessity to interact with the data -- you can just use your text editor or write an alternative CLI. This openness is important to me as a user and a developer.
 - The data is trivial to back up / share / replicate. It's just a text file.
+- The data can be easily and esnsibly version controlled using e.g. `git`. Having a human-readable format also means version control tools for source code work well with the format. Although `kaos` has some history-tracking built in via timestamps on task updates, VCS work well with Kaos's file format.
 
 The exact syntax for serializing a task into a `kaosfile` is still in flux, but should be easy to find in `pkg/kaos/task.go` as `Task.Parse() and Task.String()`.
 

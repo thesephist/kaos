@@ -13,3 +13,7 @@ kaos (2): Add ability to specify the location for a kaosfile in an environment v
 	Explicitly prohibit traversing up cwd directory parents to find a ./kaosfile -- might be useful when working inside a git project specifically? Otherwise not very useful and mostly bloat imo
 #nhvgynctuq [2019/02/27T03:11:31|-|-|-]
 kaos (2): Add `kaos reschedule` command to take all tasks where I'm late, and reschedule their due dates to be today
+#rwtmykszit [2019/02/27T13:37:55|-|-|-]
+kaos (4): "kaos serve" should be a command on the same binary, opens a port (7283?) and serves a UI from compiled HTML templates
+	Make a lightweight framework for rendering HTML components a la JSX/JDOM, passing down props
+	Compiled templates, and same with CSS/JS (but let's try to optimize for no-JS and have JS as a progressive enhancement)

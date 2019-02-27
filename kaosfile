@@ -11,3 +11,5 @@ sigil (4): Date/time parsing should support natural language for "today", "tomor
 kaos (2): Add ability to specify the location for a kaosfile in an environment variable -- for usage as a general CLI for a non-project-specific project manager, like keeping the kaosfile in ~/Dropbox/
 	Should make a kaosfile path resolution order and set a spec: local command line flag -> local ./kaosfile in cwd -> PATH
 	Explicitly prohibit traversing up cwd directory parents to find a ./kaosfile -- might be useful when working inside a git project specifically? Otherwise not very useful and mostly bloat imo
+#nhvgynctuq [2019/02/27T03:11:31|-|-|-]
+kaos (2): Add `kaos reschedule` command to take all tasks where I'm late, and reschedule their due dates to be today

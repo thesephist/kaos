@@ -21,6 +21,8 @@ func Prompt(str string) string {
 func main() {
 	args := os.Args[1:]
 
+	fileChanged := false
+
 	if len(args) == 0 {
 		args = append(args, "list")
 	}
@@ -49,9 +51,12 @@ func main() {
 	switch action {
 	case "list":
 		fmt.Println(tasks.Sorted().Print())
+	case "all":
+		fmt.Println(tasks.Sorted().PrintAll())
 	case "find":
 		fmt.Println(tasks.Search(parameters[0]).Sorted().Print())
 	case "create":
+		fileChanged = true
 		project := Prompt("Project?")
 		sizeStr := Prompt("Size?")
 		size, err := strconv.Atoi(sizeStr)
@@ -74,23 +79,29 @@ func main() {
 		fmt.Println("Created:")
 		fmt.Println(t.Print())
 	case "start":
+		fileChanged = true
 		target.Start()
 		fmt.Printf("Started #%s: %s\n", target.Ref, target.Description)
 	case "finish":
+		fileChanged = true
 		target.Finish()
 		fmt.Printf("Finished#%s: %s\n", target.Ref, target.Description)
 
 	case "remove":
+		fileChanged = true
 		target.Delete()
 		fmt.Printf("Removed #%s: %s\n", target.Ref, target.Description)
 	case "unstart":
+		fileChanged = true
 		target.Unstart()
 		fmt.Printf("Unstarted #%s: %s\n", target.Ref, target.Description)
 	case "unfinish":
+		fileChanged = true
 		target.Unfinish()
 		fmt.Printf("Unfinished#%s: %s\n", target.Ref, target.Description)
 
 	case "due":
+		fileChanged = true
 		dateStr := Prompt("Due Date?")
 		date, err := time.Parse("2006/01/02T15:04:05", dateStr)
 		if err != nil {
@@ -103,22 +114,26 @@ func main() {
 			fmt.Println(target.Print())
 		}
 	case "project":
+		fileChanged = true
 		project := Prompt("Project?")
 		target.Project = project
 		fmt.Println("Updated.")
 		fmt.Println(target.Print())
 	case "size":
+		fileChanged = true
 		sizeStr := Prompt("Size?")
 		size, _ := strconv.Atoi(sizeStr)
 		target.Size = size
 		fmt.Println("Updated.")
 		fmt.Println(target.Print())
 	case "describe":
+		fileChanged = true
 		description := Prompt("Description?")
 		target.Description = description
 		fmt.Println("Updated.")
 		fmt.Println(target.Print())
 	case "comment":
+		fileChanged = true
 		newComment := Prompt("New Comment?")
 		target.Comments = append(target.Comments, newComment)
 		fmt.Println("Updated.")
@@ -129,10 +144,12 @@ func main() {
 		os.Exit(1)
 	}
 
-	writtenBytes, err := kaos.Write(taskFile, tasks)
-	err = taskFile.Truncate(int64(writtenBytes))
-	if err != nil {
-		fmt.Println("Error writing kaosfile:", err)
-		os.Exit(1)
+	if fileChanged {
+		writtenBytes, err := kaos.Write(taskFile, tasks)
+		err = taskFile.Truncate(int64(writtenBytes))
+		if err != nil {
+			fmt.Println("Error writing kaosfile:", err)
+			os.Exit(1)
+		}
 	}
 }

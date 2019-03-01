@@ -147,6 +147,13 @@ func (t Task) Print() string {
 	return taskStr
 }
 
+// Reports whether a task's due date is in the past
+func (t *Task) IsOverdue() bool {
+	return !t.Due.IsZero() &&
+		t.Finished.IsZero() &&
+		t.Due.Before(time.Now())
+}
+
 // Start marks the task as started now
 func (t *Task) Start() {
 	t.Started = time.Now()

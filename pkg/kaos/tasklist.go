@@ -6,6 +6,7 @@ import (
 	"io"
 	"sort"
 	"strings"
+	"time"
 )
 
 type TaskList []Task
@@ -69,6 +70,22 @@ func (tasks *TaskList) Search(sub string) (matches TaskList) {
 		}
 	}
 	return matches
+}
+
+func (tasks *TaskList) RescheduleOverdue() {
+	now := time.Now()
+	today := time.Date(
+		now.Year(),
+		now.Month(),
+		now.Day(),
+		0, 0, 0, 0,
+		now.Location(),
+	)
+	for i, t := range *tasks {
+		if t.IsOverdue() {
+			(*tasks)[i].Due = today
+		}
+	}
 }
 
 func (tasks *TaskList) FindMatch(ref string) (match *Task, err error) {

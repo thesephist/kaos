@@ -1,6 +1,6 @@
 #gxtrbimppt [2019/02/26T13:22:09|2019/02/28T20:57:18|2019/02/28T20:57:18|2019/02/26T00:00:00]
 kaos (2): Set up Golang workspace on my machine to use the ~/go/ GOPATH correctly, so I can just import from canonical, not relative, paths in go source (symlink from github repo dires to GOPATH)
-#kcvdprlohm [2019/02/23T21:43:22|2019/02/24T04:36:41|-|2019/02/27T00:00:00]
+#kcvdprlohm [2019/02/23T21:43:22|2019/02/24T04:36:41|-|2019/02/28T00:00:00]
 sigil (2): Consider removing Ref as a persistent property, and instead having a hash function that hashes a Task struct to the same type of reference code
 	hash code should depend on (Created, Project, Description). Altering any of these shoudl change the hashcode but altering other things should not.
 #lfqmwnxrrh [2019/02/23T21:25:21|-|-|-]
@@ -11,7 +11,7 @@ sigil (4): Date/time parsing should support natural language for "today", "tomor
 kaos (2): Add ability to specify the location for a kaosfile in an environment variable -- for usage as a general CLI for a non-project-specific project manager, like keeping the kaosfile in ~/Dropbox/
 	Should make a kaosfile path resolution order and set a spec: local command line flag -> local ./kaosfile in cwd -> PATH
 	Explicitly prohibit traversing up cwd directory parents to find a ./kaosfile -- might be useful when working inside a git project specifically? Otherwise not very useful and mostly bloat imo
-#nhvgynctuq [2019/02/27T03:11:31|-|-|-]
+#nhvgynctuq [2019/02/27T03:11:31|2019/02/28T21:25:41|2019/02/28T21:25:41|-]
 kaos (2): Add `kaos reschedule` command to take all tasks where I'm late, and reschedule their due dates to be today
 #rwtmykszit [2019/02/27T13:37:55|-|-|-]
 kaos (4): "kaos serve" should be a command on the same binary, opens a port (7283?) and serves a UI from compiled HTML templates

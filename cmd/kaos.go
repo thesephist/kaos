@@ -55,6 +55,9 @@ func main() {
 		fmt.Println(tasks.Sorted().PrintAll())
 	case "find":
 		fmt.Println(tasks.Search(parameters[0]).Sorted().Print())
+	case "fold":
+		fileChanged = true
+		tasks.RescheduleOverdue()
 	case "create":
 		fileChanged = true
 		project := Prompt("Project?")
@@ -81,24 +84,24 @@ func main() {
 	case "start":
 		fileChanged = true
 		target.Start()
-		fmt.Printf("Started #%s: %s\n", target.Ref, target.Description)
+		fmt.Println("Started", target.Print())
 	case "finish":
 		fileChanged = true
 		target.Finish()
-		fmt.Printf("Finished#%s: %s\n", target.Ref, target.Description)
+		fmt.Println("Finished", target.Print())
 
 	case "remove":
 		fileChanged = true
 		target.Delete()
-		fmt.Printf("Removed #%s: %s\n", target.Ref, target.Description)
+		fmt.Println("Removed", target.Print())
 	case "unstart":
 		fileChanged = true
 		target.Unstart()
-		fmt.Printf("Unstarted #%s: %s\n", target.Ref, target.Description)
+		fmt.Println("Unstarted", target.Print())
 	case "unfinish":
 		fileChanged = true
 		target.Unfinish()
-		fmt.Printf("Unfinished#%s: %s\n", target.Ref, target.Description)
+		fmt.Println("Unfinished", target.Print())
 
 	case "due":
 		fileChanged = true

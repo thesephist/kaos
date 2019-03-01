@@ -17,3 +17,4 @@ kaos (2): Add `kaos reschedule` command to take all tasks where I'm late, and re
 kaos (4): "kaos serve" should be a command on the same binary, opens a port (7283?) and serves a UI from compiled HTML templates
 	Make a lightweight framework for rendering HTML components a la JSX/JDOM, passing down props
 	Compiled templates, and same with CSS/JS (but let's try to optimize for no-JS and have JS as a progressive enhancement)
+	Sigil/Kaos over-network API should be mirrored after the verb noun syntax of the CLI. So say a unit of command: `create {name: ...}` or `find <keyword>` or `due xcfd {time: <timestamp>}` And we just comma separate these units if bulk operation

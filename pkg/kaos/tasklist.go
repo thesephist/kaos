@@ -23,6 +23,17 @@ func (tasks TaskList) String() string {
 func (tasks TaskList) Print() string {
 	var s []string
 	for _, t := range tasks {
+		// don't show finished tasks by default
+		if !t.deleted && t.Finished.IsZero() {
+			s = append(s, t.Print())
+		}
+	}
+	return strings.Join(s, "\n")
+}
+
+func (tasks TaskList) PrintAll() string {
+	var s []string
+	for _, t := range tasks {
 		if !t.deleted {
 			s = append(s, t.Print())
 		}

@@ -1,6 +1,6 @@
 #gxtrbimppt [2019/02/26T13:22:09|2019/02/28T20:57:18|2019/02/28T20:57:18|2019/02/26T00:00:00]
 kaos (2): Set up Golang workspace on my machine to use the ~/go/ GOPATH correctly, so I can just import from canonical, not relative, paths in go source (symlink from github repo dires to GOPATH)
-#kcvdprlohm [2019/02/23T21:43:22|2019/02/24T04:36:41|-|2019/02/28T00:00:00]
+#kcvdprlohm [2019/02/23T21:43:22|2019/02/24T04:36:41|-|2019/05/15T00:00:00]
 sigil (2): Consider removing Ref as a persistent property, and instead having a hash function that hashes a Task struct to the same type of reference code
 	hash code should depend on (Created, Project, Description). Altering any of these shoudl change the hashcode but altering other things should not.
 #lfqmwnxrrh [2019/02/23T21:25:21|-|-|-]
